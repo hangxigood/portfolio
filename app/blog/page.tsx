@@ -20,10 +20,10 @@ export default function BlogPage() {
           <article key={post.id}>
             <Link 
               href={`/blog/${post.id}`}
-              className="block text-xl font-semibold mb-2 hover:underline">
+              className="block text-xl font-semibold mb-1 hover:underline">
               {post.title}
             </Link>
-            <p className="text-gray-400">{post.content.slice(0, 110)}...</p>
+            <p className="text-gray-400 mb-1">{post.content.slice(0, 110)}...</p>
             <time className="text-gray-500">{formatDate(post.date)}</time>
           </article>
         ))}
