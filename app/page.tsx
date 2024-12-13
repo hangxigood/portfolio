@@ -8,7 +8,7 @@ export default function Home() {
       <div className="flex flex-col md:flex-row items-center gap-8">
         <div className="w-48 h-48 relative rounded-full overflow-hidden">
           <Image
-            src="/profile.jpg"
+            src={process.env.NODE_ENV === 'production' ? '/portfolio/profile.jpg' : '/profile.jpg'}
             alt="Hangxi Xiang"
             fill
             className="object-cover"
