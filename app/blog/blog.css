@@ -1,0 +1,41 @@
+pre {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+code {
+  font-family: var(--font-geist-mono);
+}
+
+.prose pre {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+.prose code {
+  color: inherit;
+}
+
+.dark .prose pre {
+  background-color: #1a1a1a;
+}
+
+.prose :not(pre) > code {
+  background-color: #f5f5f5;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+.dark .prose :not(pre) > code {
+  background-color: #1a1a1a;
+}
+
+.prose pre code {
+  color: inherit;
+  background-color: transparent;
+  padding: 0;
+} 

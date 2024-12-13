@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import matter from 'gray-matter'
 import fs from 'fs'
 import path from 'path'
+import { renderMarkdown } from '@/lib/markdown'
 
 // Add this export - it tells Next.js which paths to generate at build time
 export async function generateStaticParams() {
@@ -35,6 +36,8 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
     notFound()
   }
 
+  const htmlContent = renderMarkdown(post.content)
+
   return (
     <article className="max-w-4xl mx-auto py-12 px-4">
       <h1 className="text-4xl font-bold mb-4">{post.data.title}</h1>
@@ -46,8 +49,8 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
         })}
       </time>
       <div 
-        className="prose dark:prose-invert max-w-none"
-        dangerouslySetInnerHTML={{ __html: post.content }}
+        className="prose dark:prose-invert max-w-none prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800 prose-pre:p-4 prose-pre:rounded-lg"
+        dangerouslySetInnerHTML={{ __html: htmlContent }}
       />
     </article>
   )
