@@ -23,6 +23,7 @@ export default function BlogPage() {
               className="block text-xl font-semibold mb-2 hover:underline">
               {post.title}
             </Link>
+            <p className="text-gray-400">{post.content.slice(0, 110)}...</p>
             <time className="text-gray-500">{formatDate(post.date)}</time>
           </article>
         ))}
