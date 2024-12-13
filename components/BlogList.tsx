@@ -1,29 +1,32 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-
-interface Post {
-  id: string
-  title: string
-  date: string
-  content: string
-  tags: string[]
-}
-
-interface BlogListProps {
-  posts: Post[]
-}
+import { useSearchParams, useRouter } from 'next/navigation'
+import { BlogListProps } from '@/types/blog'
 
 export default function BlogList({ posts }: BlogListProps) {
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const [selectedTag, setSelectedTag] = useState<string | null>(searchParams.get('tag'))
 
-  const allTags = Array.from(new Set(
-    posts.flatMap(post => post.tags || [])
-  )).sort()
+  useEffect(() => {
+    const tagFromUrl = searchParams.get('tag')
+    setSelectedTag(tagFromUrl)
+  }, [searchParams])
 
   const filteredPosts = selectedTag
     ? posts.filter(post => post.tags?.includes(selectedTag))
     : posts
+
+  const handleTagClick = (tag: string) => {
+    if (selectedTag === tag) {
+      router.push('/blog')
+      setSelectedTag(null)
+    } else {
+      router.push(`/blog?tag=${tag}`)
+      setSelectedTag(tag)
+    }
+  }
 
   return (
     <>
@@ -31,31 +34,35 @@ export default function BlogList({ posts }: BlogListProps) {
         {filteredPosts.map((post) => (
           <article key={post.id}>
             <div className="flex items-center justify-between">
-                <Link 
+              <Link 
                 href={`/blog/${post.id}`}
                 className="block text-xl font-semibold mb-2 hover:underline"
-                >
+              >
                 {post.title}
-                </Link>
-                <time className="text-gray-500">
+              </Link>
+              <time className="text-gray-500">
                 {new Date(post.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
                 })}
-                </time>
+              </time>
             </div>
             <p className="text-gray-600 mb-2">{post.content.slice(0, 110)}...</p>
             <div className="flex gap-2 mb-4">
-            {post.tags?.map((tag: string) => (
-                <Link
-                key={tag}
-                href={`/blog?tag=${tag}`}
-                className="text-sm text-gray-500 hover:underline"
+              {post.tags?.map((tag: string) => (
+                <button
+                  key={tag}
+                  onClick={() => handleTagClick(tag)}
+                  className={`text-sm ${
+                    selectedTag === tag 
+                      ? 'text-blue-600 font-medium' 
+                      : 'text-gray-500'
+                  } hover:underline`}
                 >
-                #{tag}
-                </Link>
-                ))}
+                  #{tag}
+                </button>
+              ))}
             </div>
           </article>
         ))}
