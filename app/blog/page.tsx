@@ -18,14 +18,12 @@ export default function BlogPage() {
       <div className="space-y-8">
         {posts.map((post) => (
           <article key={post.id}>
-            <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
-            <time className="text-gray-500">{formatDate(post.date)}</time>
             <Link 
               href={`/blog/${post.id}`}
-              className="block mt-2 text-blue-500 hover:underline"
-            >
-              Read more →
+              className="block text-xl font-semibold mb-2 hover:underline">
+              {post.title}
             </Link>
+            <time className="text-gray-500">{formatDate(post.date)}</time>
           </article>
         ))}
       </div>
