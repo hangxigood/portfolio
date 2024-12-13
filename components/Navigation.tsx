@@ -5,7 +5,7 @@ export default function Navigation() {
     <nav className="p-4 shadow-sm">
       <div className="max-w-4xl mx-auto flex justify-between items-center">
         <Link href="/" className="font-bold text-xl">
-          Hangxi's space
+          Hangxi&apos;s Portfolio
         </Link>
         <div className="space-x-6">
           <Link href="/" className="hover:text-gray-600">Home</Link>

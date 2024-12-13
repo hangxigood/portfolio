@@ -18,7 +18,7 @@ export default function Home() {
 
         <div className="flex-1 text-center md:text-left">
           <h1 className="text-3xl font-bold mb-4">
-            Hi, I'm Hangxi Xiang
+            Hi, I&apos;m Hangxi Xiang
           </h1>
           <p className="text-lg mb-4">
             A software developer based in Calgary.

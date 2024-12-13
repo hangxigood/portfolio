@@ -3,10 +3,9 @@ import { notFound } from 'next/navigation'
 import matter from 'gray-matter'
 import fs from 'fs'
 import path from 'path'
-import { renderMarkdown } from '@/lib/markdown'
 
-// Generate static params for all posts
-export function generateStaticParams() {
+// Add this export - it tells Next.js which paths to generate at build time
+export async function generateStaticParams() {
   const posts = getAllPosts()
   return posts.map((post) => ({
     slug: post.id,
@@ -24,7 +23,7 @@ function getPost(slug: string) {
       data,
       content,
     }
-  } catch (e) {
+  } catch {
     return null
   }
 }
@@ -35,8 +34,6 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
   if (!post) {
     notFound()
   }
-
-  const htmlContent = renderMarkdown(post.content)
 
   return (
     <article className="max-w-4xl mx-auto py-12 px-4">
@@ -50,7 +47,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
       </time>
       <div 
         className="prose dark:prose-invert max-w-none"
-        dangerouslySetInnerHTML={{ __html: htmlContent }}
+        dangerouslySetInnerHTML={{ __html: post.content }}
       />
     </article>
   )
