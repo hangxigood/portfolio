@@ -2,6 +2,14 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 
+interface Post {
+  id: string;
+  title: string;
+  date: string;
+  content: string;
+  tags: string[];
+}
+
 const postsDirectory = path.join(process.cwd(), 'posts')
 
 export function getAllPosts() {
@@ -22,9 +30,9 @@ export function getAllPosts() {
 
       return {
         id,
-        ...(matterResult.data as { date: string; title: string }),
+        ...(matterResult.data as { date: string; title: string; tags: string[] }),
         content: matterResult.content,
-      }
+      } as Post
     })
 
   return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1))

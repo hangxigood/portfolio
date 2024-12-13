@@ -1,4 +1,5 @@
 import { getAllPosts } from '@/lib/posts'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import matter from 'gray-matter'
 import fs from 'fs'
@@ -41,6 +42,17 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
   return (
     <article className="max-w-4xl mx-auto py-12 px-4">
       <h1 className="text-4xl font-bold mb-4">{post.data.title}</h1>
+      <div className="flex gap-2 mb-4">
+      {post.data.tags?.map((tag: string) => (
+        <Link
+          key={tag}
+          href={`/blog?tag=${tag}`}
+          className="text-sm text-gray-500 hover:underline"
+        >
+          #{tag}
+        </Link>
+        ))}
+      </div>
       <time className="text-gray-500 block mb-8">
         {new Date(post.data.date).toLocaleDateString('en-US', {
           year: 'numeric',
