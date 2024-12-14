@@ -9,6 +9,14 @@ import { GeistMono } from 'geist/font/mono'
 export const metadata: Metadata = {
   title: "Hangxi - Portfolio & Blog",
   description: "Personal portfolio and blog showcasing my work and thoughts",
+  icons: {
+    icon: [
+      {
+        url: './favicon.ico',
+        sizes: 'any',
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
