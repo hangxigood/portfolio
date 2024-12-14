@@ -28,6 +28,7 @@ code {
   padding: 0.2em 0.4em;
   border-radius: 0.25rem;
   font-size: 0.875em;
+  color: green;
 }
 
 .dark .prose :not(pre) > code {
