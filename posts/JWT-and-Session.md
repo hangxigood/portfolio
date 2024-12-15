@@ -5,7 +5,7 @@ tags:
   - Authentication
 ---
 I always use NextAuth.js in my projects. Every time I use it, Claude gives me code like this:
-```TypeScript
+```typescript
 callbacks: {
 jwt({ token, user }) {
 if (user) {
@@ -27,7 +27,7 @@ return session;
 so I wondered what it meant. After learning, I understood the following:
 
 Firstly, the default JWT structure is like this:
-```TypeScript
+```typescript
 interface DefaultJWT {
   name?: string | null
   email?: string | null
@@ -39,7 +39,7 @@ interface DefaultJWT {
 }
 ```
 But as you can see above, we extend it to include more information. In this case, the JWT structure becomes:
-```TypeScript
+```typescript
 interface CustomJWT extends DefaultJWT {
 id: string
 role: string
@@ -62,7 +62,7 @@ When we use `const session = await getServerSession(authOptions)` on the Server 
 
 [![](https://mermaid.ink/img/pako:eNq9VFFvmzAQ_iuWpUqblCYQkgJ-6MuiTZo2aWq6Tap4ceGWWAk2s822Lsp_3xkDpYW8jhfj-87H93135kRzVQBl1MDPGmQOG8F3mpeZJPjw3CpNvhrQfl9xbUUuKi4teXcUIO04vgX9ayp_wy1_5AbGyMfv9xPllToImCpvjFAykx66uiKf1E5I8v6ofvuQo3t9e-v5MQ97xIcQ8xwZ2daPpcBvaSgQEPxofKLHMbEjzcg3fhQFtzBwowOvBxUd2gCvCqFG5r7jKtyrA8hXuJeLjNBweHakxQdytnWeowXkDkylpLOzN-LOtdDYxgrypj1qRAFvXxjTi29WNLrEQli7O3-B2QewI16trg24IZrU1bar196376U6R42RL1pZyC0USEraZrouiGs7ORbX2eTXgbjPqu6mdTQGC16JBa_tfmEm6P0nC_oGe3gwRC3fyzbRGS1Bl1wUeJFP7lBG7R5KyCjD14LrQ0YzecY8VKm2TzKnzOoaZlSrerfvNnXlJrz9A1D2A-8DRvHaPShVdkm4pexE_1AWhul8Hd8s16sojqM4SpMZfaJsGc1XQRytwjBJIwwG0XlG_zYVgnkapnFyk0ZBkKyWy2R9_gdVd3jD?type=png)](https://mermaid.live/edit#pako:eNq9VFFvmzAQ_iuWpUqblCYQkgJ-6MuiTZo2aWq6Tap4ceGWWAk2s822Lsp_3xkDpYW8jhfj-87H93135kRzVQBl1MDPGmQOG8F3mpeZJPjw3CpNvhrQfl9xbUUuKi4teXcUIO04vgX9ayp_wy1_5AbGyMfv9xPllToImCpvjFAykx66uiKf1E5I8v6ofvuQo3t9e-v5MQ97xIcQ8xwZ2daPpcBvaSgQEPxofKLHMbEjzcg3fhQFtzBwowOvBxUd2gCvCqFG5r7jKtyrA8hXuJeLjNBweHakxQdytnWeowXkDkylpLOzN-LOtdDYxgrypj1qRAFvXxjTi29WNLrEQli7O3-B2QewI16trg24IZrU1bar196376U6R42RL1pZyC0USEraZrouiGs7ORbX2eTXgbjPqu6mdTQGC16JBa_tfmEm6P0nC_oGe3gwRC3fyzbRGS1Bl1wUeJFP7lBG7R5KyCjD14LrQ0YzecY8VKm2TzKnzOoaZlSrerfvNnXlJrz9A1D2A-8DRvHaPShVdkm4pexE_1AWhul8Hd8s16sojqM4SpMZfaJsGc1XQRytwjBJIwwG0XlG_zYVgnkapnFyk0ZBkKyWy2R9_gdVd3jD)
 During user sign-in or any authenticated query, this callback function gets executed.
-```TypeScript
+```typescript
 callbacks: {
 jwt({ token, user }) {
 if (user) {
