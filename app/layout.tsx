@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/favicon.ico',
+        url: process.env.NODE_ENV === 'production' ? '/portfolio/favicon.ico' : '/favicon.ico',
         sizes: 'any',
       },
     ],
