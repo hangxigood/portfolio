@@ -54,7 +54,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
         ))}
       </div>
       <time className="text-gray-500 block mb-8">
-        {new Date(post.data.date).toLocaleDateString('en-US', {
+        {new Date(post.data.date + 'T00:00:00Z').toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'long',
           day: 'numeric'
