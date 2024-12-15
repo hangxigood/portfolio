@@ -6,11 +6,8 @@ const nextConfig = {
   },
   basePath: process.env.NODE_ENV === 'production' ? '/portfolio' : '',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/portfolio/' : '',
-  // Add these settings
   reactStrictMode: true,
-  experimental: {
-    appDir: false,
-  },
+  trailingSlash: true,
 }
 
 export default nextConfig
