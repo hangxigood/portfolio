@@ -44,10 +44,11 @@ export default function BlogList({ posts }: BlogListProps) {
               {post.title}
             </Link>
             <time className="text-gray-500">
-              {new Date(post.date + 'T00:00:00Z').toLocaleDateString('en-US', {
+              {new Date(post.date).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
-                day: 'numeric'
+                day: 'numeric',
+                timeZone: 'UTC'
               })}
             </time>
           </div>
