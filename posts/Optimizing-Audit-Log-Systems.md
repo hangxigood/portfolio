@@ -1,6 +1,6 @@
 ---
 title: Optimizing Audit Log Systems
-date: 2023-12-15
+date: 2024-12-15
 tags:
   - SystemDesign
 ---
