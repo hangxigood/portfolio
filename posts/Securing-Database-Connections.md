@@ -1,7 +1,9 @@
 ---
 title: Securing Database Connections
-date: 2024-12-13
-tags: ['database', 'security']
+date: 2024-12-12
+tags:
+  - Database
+  - Security
 ---
 No matter what framework or database, I used to use a single database connection string in my projects, such as:
 ```bash

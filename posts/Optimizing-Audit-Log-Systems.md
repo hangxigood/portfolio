@@ -1,0 +1,26 @@
+---
+title: Optimizing Audit Log Systems
+date: 2023-12-15
+tags:
+  - SystemDesign
+---
+The audit log system is a common and critical component of enterprise applications. During the design and development of my Capstone project, I thought about it a lot.
+
+That project was an electronic batch record system designed to digitize the batch record process. The client said he needed to know who changed which field, at what time, and what the old and new values were within the application. (This is essentially what an audit log does)
+
+So I started designing it. Initially, I thought we could just store the difference during every updating - let's call this the "Diff-Based Approach", the workflow was as follows:
+
+[![](https://mermaid.ink/img/pako:eNqFVMmS2jAQ_RWVDrkEMuwwPkxVApkkl4RAZg4pXxS5AVVsydECQyj-PW3LGBu7Mhwoq_v16-1JJ8pVBDSgBv44kBwWgm01S0JJ8Me4VZo8GdD-nDJtBRcpk5Y8aiUtyKjpeb_80jR-YJbvVsCVjhbMsiZgITabOYu5ixkmbcknII6eWezgszCIOLZQIPEvZiCU3pcV3n14uFQakKc0YhbIJqMyHnNxIg7rDsjy2_oHuXM50CP8PzoRctMFwrXiYAypBtyAMOxSWEAeAX0k1bAXyhlibBl1wXTb0qzAOi2vcXvQRihZLbAla22iAZmrBKcFPmnRfh3TFlR8F1MjEfpBZ0ppZ_hP9XzH5DYLKzdHlkyzOIaYrNm-mMNrE8yQRMKhOrv2mIZiiuCsBUMOwu48B9FQtOTZSlEXCrmlqZeDFk-JNFly8vbK2txsrrG5khuhE2LKpjN11ZS6djzXlQaTKnmV9FeFzArXn4s7IM8CDkJuSe1ONHS_yi63sYS5SFgSq2279j99ROmzVNzluC7iTFX8LfP87kAfr4t9fVxe_34Db66Dj-qirAys2kRVRZcxN6-xH8xCmDRmZW1-3TwDvdhQ0g5NQCdMRPj0nTKKkNodJBDSAD8jpn-HNJRnxDFn1fooOQ2sdtChWrntjgYbFhs8-XtfPJqlFV-jn0ollxA80uBEX2jQHc9G7ya9Ua83Ht_PJrPJsEOPaB71-mjuT6bTUW84ntxPzx36N2dA-2Aw68_6_cFwOhyOB-d_8MTpgA?type=png)](https://mermaid.live/edit#pako:eNqFVMmS2jAQ_RWVDrkEMuwwPkxVApkkl4RAZg4pXxS5AVVsydECQyj-PW3LGBu7Mhwoq_v16-1JJ8pVBDSgBv44kBwWgm01S0JJ8Me4VZo8GdD-nDJtBRcpk5Y8aiUtyKjpeb_80jR-YJbvVsCVjhbMsiZgITabOYu5ixkmbcknII6eWezgszCIOLZQIPEvZiCU3pcV3n14uFQakKc0YhbIJqMyHnNxIg7rDsjy2_oHuXM50CP8PzoRctMFwrXiYAypBtyAMOxSWEAeAX0k1bAXyhlibBl1wXTb0qzAOi2vcXvQRihZLbAla22iAZmrBKcFPmnRfh3TFlR8F1MjEfpBZ0ppZ_hP9XzH5DYLKzdHlkyzOIaYrNm-mMNrE8yQRMKhOrv2mIZiiuCsBUMOwu48B9FQtOTZSlEXCrmlqZeDFk-JNFly8vbK2txsrrG5khuhE2LKpjN11ZS6djzXlQaTKnmV9FeFzArXn4s7IM8CDkJuSe1ONHS_yi63sYS5SFgSq2279j99ROmzVNzluC7iTFX8LfP87kAfr4t9fVxe_34Db66Dj-qirAys2kRVRZcxN6-xH8xCmDRmZW1-3TwDvdhQ0g5NQCdMRPj0nTKKkNodJBDSAD8jpn-HNJRnxDFn1fooOQ2sdtChWrntjgYbFhs8-XtfPJqlFV-jn0ollxA80uBEX2jQHc9G7ya9Ua83Ht_PJrPJsEOPaB71-mjuT6bTUW84ntxPzx36N2dA-2Aw68_6_cFwOhyOB-d_8MTpgA)
+In this way, we can easily show the edit history, and data storage is tidy and efficient. However, every time a user submits a change, the system needs to fetch the previous version and calculate the difference. That is too expensive.
+
+Since the staff sign off on what they enter, perhaps they would not check the audit log so frequently? (I asked the client, but they didn't know yet) Let's move those complex calculations to the checking phase!
+
+I then designed this approach (Snapshot-Based Approach).
+
+[![](https://mermaid.ink/img/pako:eNqNVE1z2jAQ_SsanYGAMRR8yEwbmjaXNg1NDh1fNvJia2pLrj5IXYb_njXGAWLaxidL-3bf83uSN1zoBHnELf7yqAQuJKQGilgxekA4bdi9RdOsSzBOClmCcuzaaOVQJd3K-9ub7uYHcCK7Q6FNsgAHZ-ZJzJMHyD1-lpZoqy6kbnwEi7FqarWw_uVlqyRi92UCDtmqHmUbTFskHOmK2O3X5Xd24XfAdg4VqPxKYcSWsEam8IlZtwPX0Fegc203ShgskPSu0VipVUvzRZM2TZusS0UfjEzoosyRQFZBaTPt_sbZ8WovduXznFkUjliPVXfwNKM18z_kLazfGnil1UqaglkiPNh3EsPSC4HWMoO21OqQ18GAOrmIPUh8kiplJ4F3Qr2rT6Z1DHwiHct1ej7YTx8pVyjlxQ7XJ5w9TveMZd88mqoNyb7FqWukJF4Msl2HjlU7b9Q-kdOGI-UH_BXZDwb_gW08W0hb5lAxkYFK0b7lbMk6WPboHau_CFJkGcK64j1eoClAJnT9N_WYmLuMTm7MI3pNwPyMeay2hAPv9LJSgkfOeOxxo32a8WgFuaVVc5n2P46XXbqxP7Qu2hZa8mjDf_NoFASDaTieTYL5NJyFwXjS4xWP5sFgNhwNh--CeTgKp6Ng2-N_dgOGg9k4DCbBcDIPJ_PpbDrePgOBz5hA?type=png)](https://mermaid.live/edit#pako:eNqNVE1z2jAQ_SsanYGAMRR8yEwbmjaXNg1NDh1fNvJia2pLrj5IXYb_njXGAWLaxidL-3bf83uSN1zoBHnELf7yqAQuJKQGilgxekA4bdi9RdOsSzBOClmCcuzaaOVQJd3K-9ub7uYHcCK7Q6FNsgAHZ-ZJzJMHyD1-lpZoqy6kbnwEi7FqarWw_uVlqyRi92UCDtmqHmUbTFskHOmK2O3X5Xd24XfAdg4VqPxKYcSWsEam8IlZtwPX0Fegc203ShgskPSu0VipVUvzRZM2TZusS0UfjEzoosyRQFZBaTPt_sbZ8WovduXznFkUjliPVXfwNKM18z_kLazfGnil1UqaglkiPNh3EsPSC4HWMoO21OqQ18GAOrmIPUh8kiplJ4F3Qr2rT6Z1DHwiHct1ej7YTx8pVyjlxQ7XJ5w9TveMZd88mqoNyb7FqWukJF4Msl2HjlU7b9Q-kdOGI-UH_BXZDwb_gW08W0hb5lAxkYFK0b7lbMk6WPboHau_CFJkGcK64j1eoClAJnT9N_WYmLuMTm7MI3pNwPyMeay2hAPv9LJSgkfOeOxxo32a8WgFuaVVc5n2P46XXbqxP7Qu2hZa8mjDf_NoFASDaTieTYL5NJyFwXjS4xWP5sFgNhwNh--CeTgKp6Ng2-N_dgOGg9k4DCbBcDIPJ_PpbDrePgOBz5hA)
+Great, this time we directly store data in the database without performing difference calculation or data fetching. However, the trade-off is that we have to store all the data for every updating. Additionally, when a user checks the edit history, he needs to wait for some time. This delay is not a significant issue for an infrequent action.
+
+This exploration hasn't been completed yet. Let's continue it in the next post.
+
+
+
