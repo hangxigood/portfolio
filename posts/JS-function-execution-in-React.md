@@ -27,8 +27,9 @@ When React evaluates the `createElement` , it processes all props inside it. So 
 
 In the browser DOM and JavaScript engine, it looks like this:
 
-```html
-<!-- In DOM --> <button>Click me!</button> 
+```markdown
+<!-- In DOM --> 
+<button>Click me!</button> 
 ```
 ```javascript
 <!-- In JavaScript engine --> 
