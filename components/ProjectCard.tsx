@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Project } from '../lib/projects';
+import { getImagePath } from '../lib/utils';
 
 const githubLogo = '/github-mark.svg';
 
@@ -16,11 +17,11 @@ export default function ProjectCard({
             <div className="group">
                 <Link href={deploymentLink} target="_blank" rel="noopener noreferrer" className="block">
                     <Image
-                        src={image}
+                        src={getImagePath(image)}
                         alt={title}
-                        width={400}
-                        height={300}
-                        className="w-full h-48 object-cover"
+                        width={600}
+                        height={400}
+                        className="rounded-lg object-cover"
                     />
                 </Link>
                 <div className="px-6 py-4">
