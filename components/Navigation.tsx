@@ -9,6 +9,7 @@ export default function Navigation() {
         </Link>
         <div className="space-x-6">
           <Link href="/" className="hover:text-gray-600">Home</Link>
+          <Link href="/projects" className="hover:text-gray-600">Projects</Link>
           <Link href="/blog" className="hover:text-gray-600">Blog</Link>
         </div>
       </div>
