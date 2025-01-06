@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Project } from '../lib/projects';
 import { getImagePath } from '../lib/utils';
 
-const githubLogo = '/github-mark.svg';
+const githubLogo = getImagePath('/github-mark.svg');
 
 export default function ProjectCard({
     image,
