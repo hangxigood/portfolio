@@ -1,11 +1,6 @@
 import ProjectCard from '../../components/ProjectCard';
 import { getAllProjects, Project } from '../../lib/projects';
 
-export const metadata = {
-    title: 'Projects | Portfolio',
-    description: 'Explore my portfolio of projects and development work'
-};
-
 export default function ProjectsPage() {
     const projects: Project[] = getAllProjects();
 
