@@ -4,12 +4,14 @@ interface BioProps {
 
 export const Bio = ({ paragraphs }: BioProps) => {
   return (
-    <div className="mt-12 space-y-4">
-      {paragraphs.map((paragraph, index) => (
-        <p key={index} className="text-lg">
-          {paragraph}
-        </p>
-      ))}
-    </div>
+    <section className="mt-6">
+      <div className="space-y-4">
+        {paragraphs.map((paragraph, index) => (
+          <p key={index} className="text-lg">
+            {paragraph}
+          </p>
+        ))}
+      </div>
+    </section>
   );
 };

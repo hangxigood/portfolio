@@ -10,11 +10,6 @@ projects:
     image: /images/ERP-MES.png
     githubLink: https://github.com/hangxigood/ERP-MES
     deploymentLink: https://erp-mes.vercel.app/
-  - title: Security Messages
-    description: A online message board with a suite of security measures.
-    image: /images/Security Messages.png
-    githubLink: https://github.com/hangxigood/Security_Web_Application/tree/main
-    deploymentLink: https://security-message.vercel.app/messages
 ---
 
 # Projects

@@ -5,7 +5,7 @@ interface TimelineEntry {
     organization: string;
     period: string;
     location?: string;
-    description?: string;
+    description?: string | React.ReactNode;
     type: 'work' | 'education';
     startDate: Date; // For sorting
     url?: string;
@@ -19,7 +19,13 @@ const entries: TimelineEntry[] = [
         url: "https://www.southmedic.com/",
         period: "Jan 2025 - Dec 2025",
         location: "Ontario, Canada (Remote)",
-        description: "Turning coffee into code and fighting with TypeScript. Managing timelines and reminding stakeholders that 'ASAP' is not a valid sprint duration.",
+        description: (
+            <>
+                Architected an FDA-compliant Electronic Batch Record system, digitizing{" "}
+                <span className="text-blue-600 dark:text-blue-400 font-bold">500+</span> unique product lines through a
+                dynamic architecture instead of hard-coded forms.
+            </>
+        ),
         startDate: new Date('2025-01-01')
     },
     {
@@ -29,7 +35,11 @@ const entries: TimelineEntry[] = [
         url: "https://www.sait.ca/programs-and-courses/diplomas/software-development",
         period: "Sep 2023 - Dec 2024",
         location: "Calgary, Canada",
-        description: "Grade: 4.0/4.0",
+        description: (
+            <>
+                Grade: <span className="text-emerald-600 dark:text-emerald-400 font-bold">4.0/4.0</span>
+            </>
+        ),
         startDate: new Date('2023-09-01')
     },
     {
@@ -39,7 +49,12 @@ const entries: TimelineEntry[] = [
         url: "https://gt.jwell56.com/home",
         period: "Aug 2021 - Aug 2023",
         location: "Chengdu, China",
-        description: "Launched supply chain finance products, securing 175 corporate clients and $100M CAD in orders.",
+        description: (
+            <>
+                Launched supply chain finance products, securing 175 corporate clients and{" "}
+                <span className="text-blue-600 dark:text-blue-400 font-bold">$100M CAD</span> in orders.
+            </>
+        ),
         startDate: new Date('2021-08-01')
     },
     {
@@ -49,7 +64,11 @@ const entries: TimelineEntry[] = [
         url: "https://gt.jwell56.com/home",
         period: "Aug 2020 - Aug 2021",
         location: "Chengdu, China",
-        description: "Wrangled complex datasets and advocated for data-driven decisions over legacy spreadsheet methods.",
+        description: (
+            <>
+                Automated complex back-office data workflows, replacing manual Excel processes. Designed ETL pipelines that reduced data processing time by <span className="text-blue-600 dark:text-blue-400 font-bold">95%</span>.
+            </>
+        ),
         startDate: new Date('2020-08-01')
     },
     {
@@ -93,7 +112,6 @@ const entries: TimelineEntry[] = [
     }
 ];
 
-// Sort the entries chronologically
 const sortedEntries = [...entries].sort((a, b) => b.startDate.getTime() - a.startDate.getTime());
 
 const TimelineItem = ({ entry }: { entry: TimelineEntry }) => {
@@ -101,39 +119,47 @@ const TimelineItem = ({ entry }: { entry: TimelineEntry }) => {
     const dotColor = isWork ? 'bg-blue-600' : 'bg-emerald-500';
 
     return (
-        <div className="relative pl-8 pb-12 last:pb-0">
-            <div className="absolute left-[11px] top-2 bottom-0 w-[2px] bg-slate-200 dark:bg-slate-800 last:hidden"></div>
-            <div className={`absolute left-0 top-2 w-6 h-6 rounded-full border-4 border-white dark:border-slate-950 ${dotColor}`}></div>
+        <div className="relative mb-12 last:mb-0">
+            {/* Mobile Dot and Line */}
+            <div className="md:hidden">
+                <div className="absolute left-[11px] top-2 bottom-0 w-[2px] bg-slate-200 dark:bg-slate-800"></div>
+                <div className={`absolute left-0 top-2 w-6 h-6 rounded-full border-4 border-white dark:border-slate-950 ${dotColor}`}></div>
+            </div>
 
-            <div>
-                <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-bold text-lg leading-none">{entry.title}</h3>
-                    <span className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full font-bold ${isWork ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
-                        : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
-                        }`}>
-                        {entry.type}
-                    </span>
-                </div>
-                <div className="text-slate-700 dark:text-slate-300 font-medium mb-1">
-                    {entry.url ? (
-                        <a
-                            href={entry.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                        >
-                            {entry.organization}
-                        </a>
-                    ) : (
-                        entry.organization
+            {/* Item Container */}
+            <div className={`flex flex-col md:flex-row items-start md:items-center w-full ${isWork ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                {/* Content Side */}
+                <div className={`w-full md:w-[calc(50%-12px)] pl-8 md:pl-0 ${isWork ? 'md:pr-8 md:text-right' : 'md:pl-8 md:text-left'}`}>
+                    <h3 className="font-bold text-lg leading-none mb-2">{entry.title}</h3>
+
+                    <div className="text-slate-700 dark:text-slate-300 font-medium mb-1">
+                        {entry.url ? (
+                            <a href={entry.url} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                {entry.organization}
+                            </a>
+                        ) : (
+                            entry.organization
+                        )}
+                    </div>
+
+                    <div className="text-sm text-slate-500 mb-2">{entry.period} {entry.location && `• ${entry.location}`}</div>
+
+                    {entry.description && (
+                        <p className="text-slate-600 dark:text-slate-400 text-sm italic">
+                            {entry.description}
+                        </p>
                     )}
                 </div>
-                <div className="text-sm text-slate-500 mb-2">{entry.period} {entry.location && `• ${entry.location}`}</div>
-                {entry.description && (
-                    <p className="text-slate-600 dark:text-slate-400 text-sm italic">
-                        {entry.description}
-                    </p>
-                )}
+
+                {/* Desktop Center Point (Placeholder/Spacer for the dot) */}
+                <div className="hidden md:flex w-6 h-6 items-center justify-center z-10 shrink-0 mx-0">
+                    {/* The actual dot is absolute centered in the parent container below */}
+                </div>
+
+                <div className={`absolute left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-4 border-white dark:border-slate-950 ${dotColor} shadow-sm z-10 hidden md:block`}></div>
+
+                {/* Empty Side (Desktop) */}
+                <div className="hidden md:block md:w-[calc(50%-12px)]"></div>
             </div>
         </div>
     );
@@ -141,8 +167,12 @@ const TimelineItem = ({ entry }: { entry: TimelineEntry }) => {
 
 export const Timeline = () => {
     return (
-        <div className="mt-16 max-w-2xl">
-            <h2 className="text-2xl font-bold mb-8">Experience & Education</h2>
+        <div className="mt-24 relative w-full">
+            <h2 className="text-3xl font-bold mb-8 text-center">Experience & Education</h2>
+
+            {/* Desktop Center Line */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-24 bottom-0 w-[2px] bg-slate-200 dark:bg-slate-800 hidden md:block"></div>
+
             <div className="flex flex-col">
                 {sortedEntries.map((item, idx) => (
                     <TimelineItem key={idx} entry={item} />
