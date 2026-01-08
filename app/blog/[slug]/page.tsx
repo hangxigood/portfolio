@@ -5,6 +5,7 @@ import matter from 'gray-matter'
 import fs from 'fs'
 import path from 'path'
 import { renderMarkdown } from '@/lib/markdown'
+import MermaidRenderer from '@/components/MermaidRenderer'
 
 // Add this export - it tells Next.js which paths to generate at build time
 export async function generateStaticParams() {
@@ -20,7 +21,7 @@ function getPost(slug: string) {
     const fullPath = path.join(process.cwd(), 'posts', `${slug}.md`)
     const fileContents = fs.readFileSync(fullPath, 'utf8')
     const { data, content } = matter(fileContents)
-    
+
     return {
       data,
       content,
@@ -32,7 +33,7 @@ function getPost(slug: string) {
 
 export default function BlogPost({ params }: { params: { slug: string } }) {
   const post = getPost(params.slug)
-  
+
   if (!post) {
     notFound()
   }
@@ -43,14 +44,14 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
     <article className="max-w-4xl mx-auto py-12 px-4">
       <h1 className="text-4xl font-bold mb-4">{post.data.title}</h1>
       <div className="flex gap-2 mb-4">
-      {post.data.tags?.map((tag: string) => (
-        <Link
-          key={tag}
-          href={`/blog?tag=${tag}`}
-          className="text-sm text-gray-500 hover:underline"
-        >
-          #{tag}
-        </Link>
+        {post.data.tags?.map((tag: string) => (
+          <Link
+            key={tag}
+            href={`/blog?tag=${tag}`}
+            className="text-sm text-gray-500 hover:underline"
+          >
+            #{tag}
+          </Link>
         ))}
       </div>
       <time className="text-gray-500 block mb-8">
@@ -61,10 +62,11 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           timeZone: 'UTC'
         })}
       </time>
-      <div 
+      <div
         className="prose dark:prose-invert max-w-none prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800 prose-pre:p-4 prose-pre:rounded-lg"
         dangerouslySetInnerHTML={{ __html: htmlContent }}
       />
+      <MermaidRenderer />
     </article>
   )
-} 
+}

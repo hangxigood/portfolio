@@ -37,6 +37,7 @@ const SUPPORTED_LANGUAGES = [
   'rust',
   'java',
   'csharp',
+  'mermaid',
 ] as const
 
 // Create type from the array
@@ -48,12 +49,16 @@ const md: MarkdownIt = new MarkdownIt({
   breaks: true,
   linkify: true,
   highlight: function (str: string, lang: string): string {
+    // Special handling for Mermaid diagrams
+    if (lang === 'mermaid') {
+      return `<div class="mermaid">${str}</div>`
+    }
+
     // Check if language is supported
     if (lang && SUPPORTED_LANGUAGES.includes(lang as SupportedLanguage) && Prism.languages[lang]) {
       try {
-        return `<pre class="language-${lang}"><code class="language-${lang}">${
-          Prism.highlight(str, Prism.languages[lang], lang)
-        }</code></pre>`
+        return `<pre class="language-${lang}"><code class="language-${lang}">${Prism.highlight(str, Prism.languages[lang], lang)
+          }</code></pre>`
       } catch {
         // Fallback if highlighting fails
         return `<pre><code>${md.utils.escapeHtml(str)}</code></pre>`
