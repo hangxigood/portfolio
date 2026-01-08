@@ -1,6 +1,6 @@
 ---
-title: Debugging Event Bubbling When Delete Triggers Selection
-date: 2024-12-21
+title: "Debugging Event Bubbling When Delete Triggers Selection"
+date: 2025-12-28
 tags:
   - TypeScript
   - React
@@ -12,7 +12,7 @@ While working on **LightShift**, a staff scheduling application, I encountered a
 
 The issue was in the StaffSidebar component. Here's the relevant structure:
 
-```TypeScript
+```typescript
 <li onClick={() => handleNameClick(staffMember)}>
   {/* Staff member content */}
   
@@ -40,7 +40,7 @@ The problem? **Event bubbling**. When clicking the "Confirm" button, the click e
 
 The fix was simple but crucial: **stop the event propagation**.
 
-```
+```typescript
 <button 
   onClick={(e) => {
     e.stopPropagation();  // Prevent bubbling to parent <li>
