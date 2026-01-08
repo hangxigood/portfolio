@@ -1,15 +1,15 @@
 ---
 projects:
-  - title: Docket
-    description: A work order management system
-    image: /images/Docket.png
-    githubLink: https://github.com/hangxigood/Assign-Tool
-    deploymentLink: https://docket-khaki.vercel.app/
-  - title: ERP-MES
-    description: A Electronic Batch Records (EBR) System
-    image: /images/ERP-MES.png
-    githubLink: https://github.com/hangxigood/ERP-MES
-    deploymentLink: https://erp-mes.vercel.app/
+  - title: LightShift
+    description: A Minimalist Staff Scheduler
+    image: /images/LightShift.png
+    githubLink: https://github.com/hangxigood/LightShift
+    deploymentLink: https://hangxigood.github.io/LightShift/
+  - title: Xlsx-Grid-Flow
+    description: A secure, full-stack solution for transforming Excel templates into controlled web-based data entry interfaces with automated audit trails and professional PDF report generation.
+    image: /images/Xlsx-Grid-Flow.png
+    githubLink: https://github.com/hangxigood/Xlsx-Grid-Flow
+    deploymentLink: https://hangxigood.github.io/Xlsx-Grid-Flow/
 ---
 
 # Projects
