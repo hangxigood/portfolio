@@ -12,6 +12,12 @@ projects:
     githubLink: https://github.com/hangxigood/Xlsx-Grid-Flow
     deploymentLink: https://hangxigood.github.io/Xlsx-Grid-Flow/
     stacks: ["React", "TypeScript", "C#", ".NET", "Azure"]
+  - title: GeoRoute-Optimizer
+    description: A powerful web application designed to help travelers plan efficient multi-stop trips.
+    image: /images/GeoRoute-Optimizer.png
+    githubLink: https://github.com/hangxigood/GeoRoute-Optimizer
+    deploymentLink: https://geo-route-optimizer.vercel.app/
+    stacks: ["Next.js", "TypeScript", "C#", ".NET", "ArcGIS"]
 ---
 
 # Projects
