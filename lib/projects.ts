@@ -12,6 +12,7 @@ export interface Project {
   image: string
   githubLink: string
   deploymentLink: string
+  stacks: string[]
 }
 
 interface ProjectData {
@@ -20,13 +21,14 @@ interface ProjectData {
   image: string
   githubLink: string
   deploymentLink: string
+  stacks: string[]
 }
 
 export function getAllProjects(): Project[] {
   const fullPath = path.join(projectsDirectory, 'projects.md')
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data } = matter(fileContents)
-  
+
   return data.projects.map((project: ProjectData, index: number) => ({
     slug: `project-${index}`,
     content: '',
@@ -39,7 +41,7 @@ export function getProjectBySlug(slug: string): Project {
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data } = matter(fileContents)
   const project = data.projects[Number(slug.split('-')[1])]
-  
+
   return {
     slug,
     content: '',
