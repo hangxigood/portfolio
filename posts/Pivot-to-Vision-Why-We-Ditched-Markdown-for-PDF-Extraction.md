@@ -1,12 +1,10 @@
 ---
-
-title: "Pivot to Vision: Why We Ditched Markdown for PDF Extraction" 
-date: 2025-02-02 
+title: "Pivot to Vision: Why We Ditched Markdown for PDF Extraction"
+date: 2026-02-02
 tags:
-
-- Docling
-- Gemini
-- 
+  - Docling
+  - Gemini
+  -
 ---
 In building our **Drilling Report Extraction Engine**, I recently made a major architectural pivot. I moved from a text-based conversion pipeline (using Docling) to a pure vision-based approach (using pdf2image + Gemini 3 Flash). Here's the story of why I switched and how it dramatically simplified our stack.
 
@@ -28,7 +26,7 @@ Drilling reports are visually complex. They often contain:
 
 I found that the **Markdown conversion step was "lossy."** Docling (and similar tools) struggled to perfectly represent the visual grid of the PDF in text. By the time the LLM saw the data, important spatial relationships—like which comment belonged to which time entry—were often garbled.
 
-I was spending 80% of our time debugging the _conversion_ logic rather than the _extraction_ logic.
+I was spending 80% of my time debugging the _conversion_ logic rather than the _extraction_ logic.
 
 ## The New Way: Eyes on the Data
 
