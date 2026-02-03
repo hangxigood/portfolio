@@ -4,7 +4,6 @@ date: 2026-02-02
 tags:
   - Docling
   - Gemini
-  -
 ---
 In building our **Drilling Report Extraction Engine**, I recently made a major architectural pivot. I moved from a text-based conversion pipeline (using Docling) to a pure vision-based approach (using pdf2image + Gemini 3 Flash). Here's the story of why I switched and how it dramatically simplified our stack.
 
